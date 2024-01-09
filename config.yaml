@@ -1,0 +1,67 @@
+
+data:
+  cache: '/Users/heydar/Work/void/Biology/PatternX/cache'
+  dataset:
+    - pattern : pattern_1
+      geo_tag : GSE111061
+    - pattern : pattern_1
+      geo_tag : GSE80688
+    - pattern : pattern_1
+      geo_tag : GSE148346
+    - pattern : pattern_1 
+      geo_tag : GSE157538
+    - pattern : pattern_1 
+      geo_tag : GSE65127
+    - pattern : pattern_2a 
+      geo_tag : GSE236758
+    - pattern : pattern_2a
+      geo_tag : GSE6281
+    - pattern : pattern_2a 
+      geo_tag : GSE168735
+      should_load : True
+    - pattern : pattern_3 
+      geo_tag : GSE53795
+    - pattern : pattern_3 
+      geo_tag : GSE11792
+    - pattern : pattern_3
+      geo_tag : GSE10433
+    - pattern : pattern_3 
+      geo_tag : GSE6475
+    - pattern : pattern_3 
+      geo_tag : GSE122592
+    - pattern : pattern_3
+      geo_tag : GSE115099
+    - pattern : pattern_3 
+      geo_tag : GSE108110
+    - pattern : pattern_4a 
+      geo_tag : GSE212954
+    - pattern : pattern_4a 
+      geo_tag : GSE151464
+    - pattern : pattern_4a 
+      geo_tag : GSE202855
+    - pattern : pattern_4a 
+      geo_tag : GSE188952
+    - pattern : pattern_4a 
+      geo_tag : GSE173900
+    - pattern : pattern_4a 
+      geo_tag : GSE158395
+    - pattern : pattern_4a 
+      geo_tag : GSE92566
+    - pattern : pattern_4a 
+      geo_tag : GSE234987
+    - pattern : pattern_4a 
+      geo_tag : GSE153011
+      should_load : True
+    - pattern : pattern_4a 
+      geo_tag : GSE166863
+    - pattern : pattern_4a 
+      geo_tag : GSE166861
+    - pattern : pattern_4a 
+      geo_tag : GSE9285
+      should_load : True
+    - pattern : pattern_4b
+      geo_tag : GSE158923
+    - pattern : pattern_4b 
+      geo_tag : GSE169146
+    - pattern : pattern_4b 
+      geo_tag : GSE32887
