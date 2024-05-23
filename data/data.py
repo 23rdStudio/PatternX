@@ -2,6 +2,7 @@ import os
 import copy
 import numpy as np
 import GEOparse
+import pandas as pd
 
 class Data :
     def _get_type( self ):
@@ -94,6 +95,10 @@ class Data :
         return self._genes[self._valid_genes]
 
     @property 
+    def sample_ids( self ):
+        return self._sample_ids
+
+    @property 
     def type( self ):
         if self._type is None :
             self._type = self._get_type()
@@ -101,7 +106,12 @@ class Data :
 
     @property 
     def expressions( self ):
-        return copy.deepcopy(self._expressions)
+        sample_ids = self.sample_ids 
+        genes = self.genes 
+        expressions = np.array( self._expressions ).T 
+        expressions = pd.DataFrame( expressions, index=genes, columns=sample_ids )
+
+        return expressions
 
     def shape( self ):
         print( self.geo_tag )
@@ -118,6 +128,16 @@ class Data :
 
     def reload_data( self ):
         self._parse_data()
+
+    def print_sample_metadata( self ):
+
+        sample_ids = self.sample_ids
+
+        for s in sample_ids :
+
+            print()
+            print(f'## {s}')
+            self.gse.gsms[s].show_metadata()
 
 
 
