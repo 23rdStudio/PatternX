@@ -1,4 +1,5 @@
 import numpy as np 
+import datetime
 import pandas as pd 
 import anndata 
 import pickle 
@@ -80,6 +81,12 @@ if __name__=="__main__" :
 
     data_norm = pydeseq2.preprocessing.deseq2_norm( data )[0]
 
-    print( annots.shape )
-    print( data_norm.shape )
-    #print( data_norm )
+    out = {}
+    out['data'] = data 
+    out['data_norm'] = data_norm 
+    out['annots'] = annots 
+
+    tag = datetime.datetime.now().strftime('%Y%m%d')
+
+    with open(f'dataset_{tag}.pkl','wb') as ff :
+        pickle.dump( out, ff )
