@@ -1,12 +1,41 @@
+import os
 import numpy as np 
 import datetime
 import pandas as pd 
 import anndata 
 import pickle 
-import omicverse as ov
-import pydeseq2.preprocessing
+#import omicverse as ov
+#import pydeseq2.preprocessing
 import scanpy
-import pydeseq2
+#import pydeseq2
+import platform 
+
+from matplotlib import pyplot as pp
+
+if platform.system() == "Darwin" :
+    data_root = "/Users/heydar/Work/void/data/bio/brain"
+elif platform.system() == "Linux" :
+    data_root = ""
+
+brain_dataset = "Lesion_RNAseq_20210720_patient_meta_data_v04__CH_20220209_TherapyResponse_v04_v220715.h5"
+
+def plot_gene_count( gene_counts ):
+
+    X = []
+    Y = []
+
+    for g in gene_counts :
+        X.append( g[1] )
+        Y.append( g[0] )
+
+    pp.plot( X,Y, '.-' )
+    pp.grid()
+    pp.xlabel('Datasets')
+    pp.ylabel('Number of genes')
+    pp.xticks(rotation=45)
+    pp.tight_layout()
+    pp.savefig('plot.pdf')
+    
 
 def load_dataset( geotag, batch ):
     with open( f'{geotag}.pkl','rb') as ff : 
@@ -19,7 +48,6 @@ def load_dataset( geotag, batch ):
     info = np.concatenate( [ dset, pattern, annots ], axis=1 )
     info = pd.DataFrame( info, columns=['dataset','pattern','annots'], 
                          index=dataset['annots'].index )
-
 
     data = dataset["expressions_gs"]
     adata = anndata.AnnData( data.T )
@@ -51,6 +79,8 @@ def load_brain_dataset( path, batch ):
 
 if __name__=="__main__" :
 
+    geo_names = ['brain', 'GSE6281', 'GSE6475', 'GSE10433', 'GSE11792', 'GSE32887','GSE92566','GSE148346']
+
     geotags = ['GSE6281', 'GSE6475', 'GSE10433', 'GSE11792', 'GSE32887','GSE92566','GSE148346']
 
     adata_list = []
@@ -58,15 +88,30 @@ if __name__=="__main__" :
 
     batch_idx = 0
 
-    adata, annots = load_brain_dataset("Lesion_RNAseq_20210720_patient_meta_data_v04__CH_20220209_TherapyResponse_v04_v220715.h5", str(batch_idx))
+    data_path = os.path.join( data_root, brain_dataset )
+
+    adata, annots = load_brain_dataset( data_path, str(batch_idx))
     adata_list.append( adata )
     annots_list.append( annots )
 
+    idy = 0
+    gene_counts = []
+    gene_counts.append( (adata.shape[1], geo_names[idy]) )
+
     for idx, geotag in enumerate(geotags) :
+        idy += 1
+
         batch_idx += 1
         adata, annots = load_dataset( geotag, str(batch_idx) )
         adata_list.append( adata )
         annots_list.append( annots )
+
+        aa = anndata.concat( adata_list, merge="same" )
+        gene_counts.append( (aa.shape[1], geo_names[idy]) )
+
+    plot_gene_count( gene_counts )
+
+if __name__=="__main__2" :
 
     adata = anndata.concat( adata_list, merge="same" )
 
